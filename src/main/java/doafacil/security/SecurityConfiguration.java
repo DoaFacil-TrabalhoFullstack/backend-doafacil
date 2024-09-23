@@ -14,19 +14,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import doafacil.services.AutenticacaoService;
-import doafacil.services.UsuarioService;
+import doafacil.services.AuthService;
+import doafacil.services.UserService;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration {
 
-    private final UsuarioService usuarioService;
-    private final AutenticacaoService autenticacaoService;
+    private final UserService userService;
+    private final AuthService authService;
 
-    public SecurityConfiguration(@Lazy UsuarioService usuarioService, @Lazy AutenticacaoService autenticacaoService) {
-        this.usuarioService = usuarioService;
-        this.autenticacaoService = autenticacaoService;
+    public SecurityConfiguration(@Lazy UserService userService, @Lazy AuthService authService) {
+        this.userService = userService;
+        this.authService = authService;
     }
 
     @Bean
@@ -48,9 +48,8 @@ public class SecurityConfiguration {
             )
             .csrf(csrf -> csrf.disable())
             .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(new FiltroAutenticacao(autenticacaoService, usuarioService), UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(new AuthFilter(authService, userService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
 }

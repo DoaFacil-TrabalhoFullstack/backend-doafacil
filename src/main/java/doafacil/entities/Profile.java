@@ -2,20 +2,20 @@ package doafacil.entities;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public class Perfil implements GrantedAuthority {
+public class Profile implements GrantedAuthority {
 	private static final long serialVersionUID = 1L;
 
 	//@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String nome;
+	private String name;
 
-	public Perfil() {}
+	public Profile() {}
 	
-	public Perfil(Long id, String nome) {
+	public Profile(Long id, String name) {
 		this.id = id;
-		this.nome = nome;
+		this.name = name;
 	}
 
 	public Long getId() {
@@ -26,16 +26,16 @@ public class Perfil implements GrantedAuthority {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
 	public String getAuthority() {
-		return getNome();
+		return getName();
 	}
 }

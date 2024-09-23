@@ -8,32 +8,32 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Usuario implements UserDetails {
+public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	//@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nome;
+	private String name;
 	private String email;
 
 	@JsonIgnore
-	private String senha;
+	private String password;
 
 	//@ManyToOne
-	private Perfil perfil;
+	private Profile profile;
 
-	public Usuario() {}
+	public User() {}
 
-	public Usuario(Long id, String nome, String email, String senha, Perfil perfil) {
+	public User(Long id, String name, String email, String password, Profile profile) {
 		this.id = id;
-		this.nome = nome;
+		this.name = name;
 		this.email = email;
-		this.senha = senha;
-		this.perfil = perfil;
+		this.password = password;
+		this.profile = profile;
 	}
 
-	public Usuario(Long id) {
+	public User(Long id) {
 		this.id = id;
 	}
 
@@ -46,11 +46,11 @@ public class Usuario implements UserDetails {
 	}
 
 	public String getNome() {
-		return nome;
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNome(String name) {
+		this.name = name;
 	}
 
 	public String getEmail() {
@@ -61,30 +61,30 @@ public class Usuario implements UserDetails {
 		this.email = email;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getPasswordUser() {
+		return password;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public Perfil getPerfil() {
-		return perfil;
+	public Profile getProfile() {
+		return profile;
 	}
 
-	public void setPerfil(Perfil perfil) {
-		this.perfil = perfil;
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(this.perfil);
+		return List.of(this.profile);
 	}
 
 	@Override
 	public String getPassword() {
-		return getSenha();
+		return getPasswordUser();
 	}
 
 	@Override

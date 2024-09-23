@@ -14,12 +14,12 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
-import doafacil.dtos.auth.AutenticacaoDTO;
+import doafacil.dtos.auth.AuthDTO;
 import doafacil.dtos.auth.TokenDTO;
-import doafacil.entities.Usuario;
+import doafacil.entities.User;
 
 @Service
-public class AutenticacaoService {
+public class AuthService {
 	@Value("${doafacil.jwt.expiration}")
 	private String expiration;
 
@@ -31,14 +31,14 @@ public class AutenticacaoService {
 
 	private final AuthenticationManager authManager;
 
-	public AutenticacaoService(AuthenticationManager authManager) {
+	public AuthService(AuthenticationManager authManager) {
 		this.authManager = authManager;
 	}
 
-	public TokenDTO autenticar(AutenticacaoDTO authForm) throws AuthenticationException {
+	public TokenDTO authenticate(AuthDTO authForm) throws AuthenticationException {
 		try {
-			Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(authForm.getEmail(), authForm.getSenha()));
-			String token = gerarToken(authentication);
+			Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(authForm.getEmail(), authForm.getPassword()));
+			String token = createToken(authentication);
 
 			return new TokenDTO(token);
 		} catch (BadCredentialsException e) {
@@ -46,38 +46,38 @@ public class AutenticacaoService {
 		}
 	}
 
-	private Algorithm criarAlgoritmo() {
+	private Algorithm createAlgorithm() {
 		return Algorithm.HMAC256(secret);
 	}
 
-	private String gerarToken(Authentication authentication) {
-		Usuario principal = (Usuario) authentication.getPrincipal();
-
-		Date dataDeHoje = new Date();
-		Date dataDeExpiracao = new Date(dataDeHoje.getTime() + Long.parseLong(expiration));
+	private String createToken(Authentication authentication) {
+		User principal = (User) authentication.getPrincipal();
+		Date todayDate = new Date();
+		Date expirationDate = new Date(todayDate.getTime() + Long.parseLong(expiration));
+		
 		return JWT.create()
 				  .withIssuer(issuer)
-				  .withExpiresAt(dataDeExpiracao)
+				  .withExpiresAt(expirationDate)
 				  .withSubject(
 						  principal.getId()
-						  .toString())
-				  .sign(this.criarAlgoritmo());
+						           .toString())
+				  .sign(this.createAlgorithm());
 	}
 
-	public boolean verificarToken(String token) {
+	public boolean verifyToken(String token) {
 		try {
 			if (token == null) 
 				return false;
 
-			JWT.require(this.criarAlgoritmo()).withIssuer(issuer).build().verify(token);
+			JWT.require(this.createAlgorithm()).withIssuer(issuer).build().verify(token);
 			return true;
 		} catch (JWTVerificationException exception) {
 			return false;
 		}
 	}
 
-	public Long retornarIdUsuario(String token) {
-		String subject = JWT.require(this.criarAlgoritmo()).withIssuer(issuer).build().verify(token).getSubject();
+	public Long getUserId(String token) {
+		String subject = JWT.require(this.createAlgorithm()).withIssuer(issuer).build().verify(token).getSubject();
 		return Long.parseLong(subject);
 	}
 }

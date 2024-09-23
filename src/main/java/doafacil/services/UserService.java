@@ -6,25 +6,25 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import doafacil.entities.Perfil;
-import doafacil.entities.Usuario;
+import doafacil.entities.Profile;
+import doafacil.entities.User;
 
 @Service
-public class UsuarioService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
-	Perfil perfil = new Perfil(Long.parseLong("1"), "Admin");
-	Usuario usuarioTeste = new Usuario(Long.parseLong("1"), "Teste", "teste@teste.com", new BCryptPasswordEncoder().encode("123"), perfil);
+	Profile profile = new Profile(Long.parseLong("1"), "Admin");
+	User userTest = new User(Long.parseLong("1"), "Teste", "teste@teste.com", new BCryptPasswordEncoder().encode("123"), profile);
 	
-	public Usuario buscarUsuarioPorId(Long idUsuario) {
-		return usuarioTeste;
+	public User getUserById(Long userId) {
+		return userTest;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetails userDetails = null;
 		
-		if(username.equals(this.usuarioTeste.getEmail())) 
-			userDetails = this.usuarioTeste;
+		if(username.equals(this.userTest.getEmail())) 
+			userDetails = this.userTest;
 		
 		return userDetails;
 	}
