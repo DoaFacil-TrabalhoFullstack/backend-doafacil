@@ -6,21 +6,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import doafacil.entities.Teste;
-import doafacil.services.ProdutoService;
+import doafacil.services.ProductService;
 
 @RestController
-@RequestMapping("v1/produto")
-public class ProdutoController {
+@RequestMapping("v1/product")
+public class ProductController {
 
-	private final ProdutoService produtoService;
+	private final ProductService productService;
 
-	public ProdutoController(ProdutoService produtoService) {
-		this.produtoService = produtoService;
+	public ProductController(ProductService productService) {
+		this.productService = productService;
 	}
 	
 	@GetMapping("teste")
 	public ResponseEntity<Teste> testandoClasses() {
-		Teste valorDoTeste = produtoService.testandoService();
+		Teste valorDoTeste = productService.testandoService();
 		return  ResponseEntity.ok(valorDoTeste);
 	}
 }
