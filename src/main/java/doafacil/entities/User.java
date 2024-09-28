@@ -3,10 +3,7 @@ package doafacil.entities;
 import java.util.Collection;
 import java.util.List;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -28,7 +25,7 @@ public class User implements UserDetails {
 	//@ManyToOne
 	private Profile profile;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Item> donationItems;
 
 	public User() {}
