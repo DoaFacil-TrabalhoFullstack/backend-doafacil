@@ -1,9 +1,6 @@
 package doafacil.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Item {
@@ -12,6 +9,9 @@ public class Item {
     private Long id;
     private String name;
     private String description;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private User owner;
 
     public Item(Long id, String name, String description) {
         this.id = id;
@@ -41,5 +41,13 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

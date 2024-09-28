@@ -1,11 +1,9 @@
 package doafacil.entities;
 
-import doafacil.interfaces.Donee;
-import doafacil.interfaces.Donor;
 import jakarta.persistence.Entity;
 
 @Entity
-public class NaturalPerson extends User implements Donee, Donor {
+public class NaturalPerson extends User {
 
     private String cpf;
 
@@ -22,15 +20,5 @@ public class NaturalPerson extends User implements Donee, Donor {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    @Override
-    public void receive() {
-        System.out.println(this.getName() + "Has received!");
-    }
-
-    @Override
-    public void donate() {
-        System.out.println(this.getName() + "Has donated!");
     }
 }

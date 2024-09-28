@@ -1,21 +1,37 @@
 package doafacil.entities;
 
-import jakarta.persistence.Entity;
+import java.util.Collection;
+import java.util.List;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@Entity
-public class User {
-    @Id
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+public class User implements UserDetails {
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
+
+	@JsonIgnore
     private String password;
     private String phone;
 
-    public User() {}
+	//@ManyToOne
+	private Profile profile;
+
+    @OneToMany
+    private List<Item> donationItems;
+
+	public User() {}
 
     public User(String name, String email, String password, String phone) {
         this.name = name;
@@ -24,12 +40,72 @@ public class User {
         this.phone = phone;
     }
 
+	public User(Long id, String name, String email, String password, Profile profile) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.profile = profile;
+	}
+
+	public User(Long id) {
+		this.id = id;
+	}
+
     public Long getId() {
-        return id;
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return name;
+	}
+
+	public void setNome(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPasswordUser() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+
+	public String getPhone() {
+        return phone;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<Item> getDonationItems() {
+        return donationItems;
+    }
+
+    public void setDonationItems(List<Item> donationItems) {
+        this.donationItems = donationItems;
     }
 
     public String getName() {
@@ -40,27 +116,39 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of(this.profile);
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	@Override
+	public String getPassword() {
+		return getPasswordUser();
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	@Override
+	public String getUsername() {
+		return getEmail();
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 }
+
