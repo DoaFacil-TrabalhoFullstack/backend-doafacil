@@ -8,11 +8,6 @@ import doafacil.repositories.ProductRepository;
 @Service
 public class ProductService {
 	private Teste teste = new Teste();
-	/*private final ProdutoRepository ProdutoRepository;
-	
-	ProdutoService(ProdutoRepository produtoRepository) {
-		this.produtoRepository = produtoRepository;
-	}*/
 
 	public Teste testandoService() {
 		teste.setTeste01(ProductRepository.teste01);

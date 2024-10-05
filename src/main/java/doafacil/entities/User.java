@@ -3,6 +3,7 @@ package doafacil.entities;
 import java.util.Collection;
 import java.util.List;
 
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,19 +12,30 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String name;
-	private String email;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String email;
 
 	@JsonIgnore
-	private String password;
+    private String password;
+    private String phone;
 
 	//@ManyToOne
 	private Profile profile;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Item> donationItems;
+
 	public User() {}
+
+    public User(String name, String email, String password, String phone) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+    }
 
 	public User(Long id, String name, String email, String password, Profile profile) {
 		this.id = id;
@@ -37,7 +49,7 @@ public class User implements UserDetails {
 		this.id = id;
 	}
 
-	public Long getId() {
+    public Long getId() {
 		return id;
 	}
 
@@ -77,6 +89,30 @@ public class User implements UserDetails {
 		this.profile = profile;
 	}
 
+	public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<Item> getDonationItems() {
+        return donationItems;
+    }
+
+    public void setDonationItems(List<Item> donationItems) {
+        this.donationItems = donationItems;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return List.of(this.profile);
@@ -112,3 +148,4 @@ public class User implements UserDetails {
 		return true;
 	}
 }
+
