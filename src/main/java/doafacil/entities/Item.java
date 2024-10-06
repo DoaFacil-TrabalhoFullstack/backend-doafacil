@@ -3,15 +3,18 @@ package doafacil.entities;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "tb_items")
 public class Item {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String name;
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private User owner;
+   @ManyToOne(cascade = CascadeType.ALL)
+   private User owner;
 
     public Item(Long id, String name, String description) {
         this.id = id;

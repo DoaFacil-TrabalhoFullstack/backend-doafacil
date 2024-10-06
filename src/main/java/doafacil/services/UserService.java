@@ -1,31 +1,41 @@
 package doafacil.services;
 
+import java.util.Optional;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import doafacil.entities.Profile;
 import doafacil.entities.User;
+import doafacil.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UserService implements UserDetailsService {
-
-	Profile profile = new Profile(Long.parseLong("1"), "Admin");
-	User userTest = new User(Long.parseLong("1"), "Teste", "teste@teste.com", new BCryptPasswordEncoder().encode("123"), profile);
 	
+	private final UserRepository userRepository;
+	
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
+	public User getUserByEmail(String userEmail) {
+		Optional<User> user = userRepository.findByEmail(userEmail);
+		return user.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado!"));
+	}
+
 	public User getUserById(Long userId) {
-		return userTest;
+		Optional<User> user = userRepository.findById(userId);
+		return user.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado!"));
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserDetails userDetails = null;
-		
-		if(username.equals(this.userTest.getEmail())) 
-			userDetails = this.userTest;
-		
-		return userDetails;
+		return getUserByEmail(username);
+	}
+
+	public User createUser(User user) {
+		return userRepository.save(user);
 	}
 }

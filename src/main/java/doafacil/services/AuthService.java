@@ -38,10 +38,13 @@ public class AuthService {
 	public TokenDTO authenticate(AuthDTO authForm) throws AuthenticationException {
 		try {
 			Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(authForm.getEmail(), authForm.getPassword()));
+
+			System.out.println("teste 1");
 			String token = createToken(authentication);
 
 			return new TokenDTO(token);
 		} catch (BadCredentialsException e) {
+			System.out.println("teste 2");
 			throw e;//TODO: tratamento de exceções //throw new ForbiddenException("Autenticação não realizada. Por favor, revise o email e a senha informados.");
 		}
 	}

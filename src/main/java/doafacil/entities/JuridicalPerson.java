@@ -4,12 +4,14 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class JuridicalPerson extends User {
-    private String cnpj;
+	
+	private static final long serialVersionUID = 1L;
+	private String cnpj;
 
     public JuridicalPerson() {}
 
-    public JuridicalPerson(String name, String email, String password, String phone, String cnpj) {
-        super(name, email, password, phone);
+    public JuridicalPerson(Long id, String name, String email, String password, String phone, String cnpj, Profile profile) {
+        super(id, name, email, password, profile, phone);
         this.cnpj = cnpj;
     }
 
