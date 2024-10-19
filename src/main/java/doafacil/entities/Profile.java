@@ -2,11 +2,15 @@ package doafacil.entities;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "tb_profiles")
 public class Profile implements GrantedAuthority {
 	private static final long serialVersionUID = 1L;
 
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String name;

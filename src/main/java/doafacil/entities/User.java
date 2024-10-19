@@ -3,12 +3,13 @@ package doafacil.entities;
 import java.util.Collection;
 import java.util.List;
 
-import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "tb_users")
 public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
@@ -17,32 +18,24 @@ public class User implements UserDetails {
     private Long id;
     private String name;
     private String email;
-
-	@JsonIgnore
     private String password;
     private String phone;
 
-	//@ManyToOne
-	private Profile profile;
+	@ManyToOne
+	protected Profile profile;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Item> donationItems;
 
 	public User() {}
-
-    public User(String name, String email, String password, String phone) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-    }
-
-	public User(Long id, String name, String email, String password, Profile profile) {
+	
+	public User(Long id, String name, String email, String password, Profile profile, String phone) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.profile = profile;
+        this.phone = phone;
 	}
 
 	public User(Long id) {

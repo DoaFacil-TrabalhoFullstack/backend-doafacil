@@ -4,13 +4,14 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class NaturalPerson extends User {
-
-    private String cpf;
+	
+	private static final long serialVersionUID = 1L;
+	private String cpf;
 
     public NaturalPerson() {}
 
-    public NaturalPerson(String name, String email, String password, String phone, String cpf) {
-        super(name, email, password, phone);
+    public NaturalPerson(Long id, String name, String email, String password, String phone, String cpf, Profile profile) {
+        super(id, name, email, password, profile, phone);
         this.cpf = cpf;
     }
 
