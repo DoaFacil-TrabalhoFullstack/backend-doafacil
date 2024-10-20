@@ -11,7 +11,7 @@ import doafacil.dtos.auth.TokenDTO;
 import doafacil.services.AuthService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("v1/auth")
 public class AuthController {
 
 	private final AuthService authService;
