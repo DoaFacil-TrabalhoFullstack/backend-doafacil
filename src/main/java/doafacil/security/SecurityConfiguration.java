@@ -1,5 +1,6 @@
 package doafacil.security;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -43,7 +44,8 @@ public class SecurityConfiguration {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers(HttpMethod.POST, "/auth", "/api-docs/**", "/swagger-ui.html**").permitAll()
+                .requestMatchers(HttpMethod.POST, "v1/auth").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .requestMatchers("/v1/**").authenticated()
             )
             .csrf(csrf -> csrf.disable())
