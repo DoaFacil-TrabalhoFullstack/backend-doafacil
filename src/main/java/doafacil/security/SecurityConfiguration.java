@@ -44,7 +44,7 @@ public class SecurityConfiguration {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers(HttpMethod.POST, "v1/auth").permitAll()
+            	.requestMatchers(HttpMethod.POST, "v1/auth", "v1/users/create").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .requestMatchers("/v1/**").authenticated()
             )
