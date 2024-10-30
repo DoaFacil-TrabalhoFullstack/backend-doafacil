@@ -42,7 +42,15 @@ public class User implements UserDetails {
 		this.id = id;
 	}
 
-    public Long getId() {
+	public User(String name, String email, String password, Profile profile, String phone) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.profile = profile;
+		this.phone = phone;
+	}
+
+	public Long getId() {
 		return id;
 	}
 

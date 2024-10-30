@@ -44,7 +44,16 @@ public class SecurityConfiguration {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((requests) -> requests
+<<<<<<< Updated upstream
             	.requestMatchers(HttpMethod.POST, "v1/auth", "v1/users/create").permitAll()
+=======
+<<<<<<< HEAD
+                    .requestMatchers("/v1/users/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "v1/auth").permitAll()
+=======
+            	.requestMatchers(HttpMethod.POST, "v1/auth", "v1/users/create").permitAll()
+>>>>>>> ec2bd3b04dca3a43deff2444ff17c24941162edf
+>>>>>>> Stashed changes
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .requestMatchers("/v1/**").authenticated()
             )

@@ -10,8 +10,8 @@ public class JuridicalPerson extends User {
 
     public JuridicalPerson() {}
 
-    public JuridicalPerson(Long id, String name, String email, String password, String phone, String cnpj, Profile profile) {
-        super(id, name, email, password, profile, phone);
+    public JuridicalPerson(String name, String email, String password, String phone, String cnpj, Profile profile) {
+        super(name, email, password, profile, phone);
         this.cnpj = cnpj;
     }
 

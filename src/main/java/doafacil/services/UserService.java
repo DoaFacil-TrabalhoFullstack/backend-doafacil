@@ -2,6 +2,7 @@ package doafacil.services;
 
 import java.util.Optional;
 
+import doafacil.exceptions.UserAlreadyExistsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,6 +37,12 @@ public class UserService implements UserDetailsService {
 	}
 
 	public User createUser(User user) {
+		Optional<User> createdUser = userRepository.findByEmail(user.getEmail());
+
+		if (createdUser.isPresent()) {
+			throw new UserAlreadyExistsException("Usuário com email " + user.getEmail() + " já existe.");
+		}
+
 		return userRepository.save(user);
 	}
 }
