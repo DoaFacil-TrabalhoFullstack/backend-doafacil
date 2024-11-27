@@ -22,12 +22,12 @@ public class UserService implements UserDetailsService {
 	
 	public User getUserByEmail(String userEmail) {
 		Optional<User> user = userRepository.findByEmail(userEmail);
-		return user.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado!"));
+		return user.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado!"));
 	}
 
 	public User getUserById(Long userId) {
 		Optional<User> user = userRepository.findById(userId);
-		return user.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado!"));
+		return user.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado!"));
 	}
 
 	@Override

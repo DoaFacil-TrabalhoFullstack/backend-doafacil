@@ -3,8 +3,8 @@ package doafacil.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tb_items")
-public class Item {
+@Table(name = "tb_products")
+public class Product {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,16 +13,19 @@ public class Item {
     private String name;
     private String description;
 
-   @ManyToOne(cascade = CascadeType.ALL)
-   private User owner;
+    @ManyToOne(cascade = CascadeType.ALL)
+   	private User owner;
 
-    public Item(Long id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
+    public Product() {}
+    
+    public Product(Long id, String name, String description, User owner) {
+	this.id = id;
+	this.name = name;
+	this.description = description;
+	this.owner = owner;
     }
 
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 

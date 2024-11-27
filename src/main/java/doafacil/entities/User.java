@@ -25,7 +25,7 @@ public class User implements UserDetails {
 	protected Profile profile;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Item> donationItems;
+    private List<Product> donationItems;
 
 	public User() {}
 	
@@ -90,11 +90,11 @@ public class User implements UserDetails {
         this.phone = phone;
     }
 
-    public List<Item> getDonationItems() {
+    public List<Product> getDonationItems() {
         return donationItems;
     }
 
-    public void setDonationItems(List<Item> donationItems) {
+    public void setDonationItems(List<Product> donationItems) {
         this.donationItems = donationItems;
     }
 
