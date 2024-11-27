@@ -35,6 +35,7 @@ public class ProductController {
 		User userOwner = userService.getUserById(postProductDTO.getOwner());
 		
 		Product product = productService.createProduct(ProductMapper.fromDTO(postProductDTO, userOwner));
+		
 		return ResponseEntity.ok(ProductMapper.fromEntity(product));
 	}
 	
@@ -47,6 +48,12 @@ public class ProductController {
 				  								  .map(ProductMapper::fromEntity)
 				  								  .toList();
 		return ResponseEntity.ok(productDTOs);
+	}
+	
+	@GetMapping("/list/productId")
+	public ResponseEntity<GetProductDTO> getUser(@RequestParam Long productId) {
+		Product product = productService.getProductById(productId);
+		return ResponseEntity.ok(ProductMapper.fromEntity(product));
 	}
 	
 	@GetMapping("/list")

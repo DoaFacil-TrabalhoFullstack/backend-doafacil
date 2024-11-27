@@ -1,15 +1,15 @@
 package doafacil.dtos.products;
 
-import doafacil.entities.User;
+import doafacil.dtos.user.GetUserDTO;
 
 public class GetProductDTO {
 
 	private Long id;
     private String name;
     private String description;
-   	private User owner;
+   	private GetUserDTO owner;
 
-	public GetProductDTO(Long id, String name, String description, User owner) {
+	public GetProductDTO(Long id, String name, String description, GetUserDTO owner) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -40,11 +40,11 @@ public class GetProductDTO {
         this.description = description;
     }
 
-    public User getOwner() {
+    public GetUserDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(GetUserDTO owner) {
         this.owner = owner;
     }
 }

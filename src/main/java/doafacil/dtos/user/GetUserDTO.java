@@ -5,13 +5,11 @@ public class GetUserDTO {
 	private String name;
     private String email;
     private String phone;
-    private String profile;
 
-	public GetUserDTO(String name, String email, String phone, String profile) {
+	public GetUserDTO(String name, String email, String phone) {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
-		this.profile = profile;
 	}
 
 	public String getName() {
@@ -36,13 +34,5 @@ public class GetUserDTO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public String getProfile() {
-		return profile;
-	}
-
-	public void setProfile(String profile) {
-		this.profile = profile;
 	}
 }

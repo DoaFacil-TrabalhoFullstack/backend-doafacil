@@ -1,5 +1,6 @@
 package doafacil.dtos.products;
 
+import doafacil.dtos.user.GetUserDTO;
 import doafacil.entities.Product;
 import doafacil.entities.User;
 
@@ -10,6 +11,7 @@ public class ProductMapper {
 	}
 	
 	public static GetProductDTO fromEntity(Product product) {
-		return new GetProductDTO(product.getId(), product.getName(), product.getDescription(), product.getOwner());
+		GetUserDTO dto = new GetUserDTO(product.getOwner().getName(), product.getOwner().getEmail(), product.getOwner().getPhone());
+		return new GetProductDTO(product.getId(), product.getName(), product.getDescription(), dto);
 	}
 }
