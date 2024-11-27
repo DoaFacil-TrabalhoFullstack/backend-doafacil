@@ -15,6 +15,6 @@ public class UserMapper {
 	}
 	
 	public static GetUserDTO fromEntity(User user) {
-		return new GetUserDTO(user.getName(), user.getEmail(), user.getPassword(), user.getPhone(), user.getProfile().getName());
+		return new GetUserDTO(user.getName(), user.getEmail(), user.getPhone(), user.getProfile().getName());
 	}
 }

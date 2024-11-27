@@ -1,28 +1,22 @@
-package doafacil.entities;
+package doafacil.dtos.products;
 
-import jakarta.persistence.*;
+import doafacil.entities.User;
 
-@Entity
-@Table(name = "tb_items")
-public class Item {
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
+public class GetProductDTO {
+
+	private Long id;
     private String name;
     private String description;
+   	private User owner;
 
-   @ManyToOne(cascade = CascadeType.ALL)
-   private User owner;
+	public GetProductDTO(Long id, String name, String description, User owner) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.owner = owner;
+	}
 
-    public Item(Long id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 
