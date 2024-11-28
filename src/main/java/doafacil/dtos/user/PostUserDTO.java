@@ -9,13 +9,17 @@ public class PostUserDTO {
     private String password;
     private String phone;
     private Profile profile;
+    private String cpf;
+    private String cnpj;
 
-	public PostUserDTO(String name, String email, String password, String phone, Profile profile) {
+	public PostUserDTO(String name, String email, String password, String phone, Profile profile, String cpf, String cnpj) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.phone = phone;
 		this.profile = profile;
+		this.cpf = cpf;
+		this.cnpj = cnpj;
 	}
 
 	public String getName() {
@@ -56,5 +60,21 @@ public class PostUserDTO {
 
 	public void setProfile(Profile profile) {
 		this.profile = profile;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 }
