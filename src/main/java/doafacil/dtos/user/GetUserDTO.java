@@ -5,11 +5,15 @@ public class GetUserDTO {
 	private String name;
     private String email;
     private String phone;
+    private String cpf;
+    private String cnpj;
 
-	public GetUserDTO(String name, String email, String phone) {
+	public GetUserDTO(String name, String email, String phone, String cnpj, String cpf) {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
+		this.cpf = cpf;
+		this.cnpj = cnpj;
 	}
 
 	public String getName() {
@@ -34,5 +38,21 @@ public class GetUserDTO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 }
