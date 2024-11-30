@@ -11,7 +11,7 @@ public class ProductMapper {
 	}
 	
 	public static GetProductDTO fromEntity(Product product) {
-		GetUserDTO dto = new GetUserDTO(product.getOwner().getName(), product.getOwner().getEmail(), product.getOwner().getPhone(), null, null);
+		GetUserDTO dto = new GetUserDTO(product.getOwner().getId(), product.getOwner().getName(), product.getOwner().getEmail(), product.getOwner().getPhone(), null, null);
 		return new GetProductDTO(product.getId(), product.getName(), product.getDescription(), dto);
 	}
 }

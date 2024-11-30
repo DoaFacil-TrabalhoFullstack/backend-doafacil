@@ -38,4 +38,8 @@ public class UserService implements UserDetailsService {
 	public User createUser(User user) {
 		return userRepository.save(user);
 	}
+
+	public User changeUser(User user) {
+		return userRepository.save(user);
+	}
 }

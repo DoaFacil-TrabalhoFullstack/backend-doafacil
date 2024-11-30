@@ -10,9 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import doafacil.dtos.products.GetInterestedOnProductDTO;
 import doafacil.dtos.products.GetProductDTO;
+import doafacil.dtos.products.InterestedOnProductMapper;
+import doafacil.dtos.products.PostInterestedOnProductDTO;
 import doafacil.dtos.products.PostProductDTO;
 import doafacil.dtos.products.ProductMapper;
+import doafacil.dtos.user.GetUserDTO;
+import doafacil.dtos.user.UserMapper;
+import doafacil.entities.InterestedOnProduct;
 import doafacil.entities.Product;
 import doafacil.entities.User;
 import doafacil.services.ProductService;
@@ -35,8 +41,17 @@ public class ProductController {
 		User userOwner = userService.getUserById(postProductDTO.getOwner());
 		
 		Product product = productService.createProduct(ProductMapper.fromDTO(postProductDTO, userOwner));
-		
 		return ResponseEntity.ok(ProductMapper.fromEntity(product));
+	}
+	
+	@PostMapping("/interested")
+	public ResponseEntity<GetInterestedOnProductDTO> createInterestedOnProduct(@RequestBody PostInterestedOnProductDTO postInterestedOnProductDTO) {
+		User user = userService.getUserById(postInterestedOnProductDTO.getUserId());
+		Product product = productService.getProductById(postInterestedOnProductDTO.getProductId());
+		
+		InterestedOnProduct interestedOnProduct = productService.createInterestedOnProduct(InterestedOnProductMapper.fromDTO(user, product)); 
+		
+		return ResponseEntity.ok(InterestedOnProductMapper.fromEntity(interestedOnProduct));
 	}
 	
 	@GetMapping("/list/ownerId")
@@ -48,6 +63,15 @@ public class ProductController {
 				  								  .map(ProductMapper::fromEntity)
 				  								  .toList();
 		return ResponseEntity.ok(productDTOs);
+	}
+	
+	@GetMapping("/list/allInterested")
+	public ResponseEntity<List<GetUserDTO>> getAllInterestedOnProduct(@RequestParam Long productId) {
+		List<User> users = productService.getAllInterestedOnProduct(productId);
+		List<GetUserDTO> usersDTOs = users.stream()
+				  								  .map(UserMapper::fromEntity)
+				  								  .toList();
+		return ResponseEntity.ok(usersDTOs);
 	}
 	
 	@GetMapping("/list/productId")

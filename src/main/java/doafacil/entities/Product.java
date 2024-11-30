@@ -1,6 +1,15 @@
 package doafacil.entities;
 
-import jakarta.persistence.*;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_products")
@@ -12,6 +21,9 @@ public class Product {
     
     private String name;
     private String description;
+    
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InterestedOnProduct> productInterested;
 
     @ManyToOne(cascade = CascadeType.ALL)
    	private User owner;
@@ -56,4 +68,12 @@ public class Product {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
+	public List<InterestedOnProduct> getProductInterested() {
+		return productInterested;
+	}
+
+	public void setProductInterested(List<InterestedOnProduct> productInterested) {
+		this.productInterested = productInterested;
+	}
 }
