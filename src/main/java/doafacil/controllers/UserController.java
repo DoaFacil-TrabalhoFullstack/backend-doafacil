@@ -32,7 +32,7 @@ public class UserController {
 		return ResponseEntity.ok(UserMapper.fromEntity(user));
 	}
 	
-	@PutMapping("/change")
+	@PutMapping("/update")
 	public ResponseEntity<GetUserDTO> changeUser(@RequestBody PutUserDTO putUserDTO) {
 		User user = userService.getUserByEmail(putUserDTO.getEmail());
 		User userChanged = userService.changeUser(UserMapper.fromDTOPut(user, putUserDTO));

@@ -53,4 +53,8 @@ public class ProductService {
 	public InterestedOnProduct createInterestedOnProduct(InterestedOnProduct interestedOnProduct) {
 		return interestedOnProductRepository.save(interestedOnProduct);
 	}
+
+	public List<Product> getAllProductsUserHasInterest(Long userId) {
+		return interestedOnProductRepository.findAllProductsUserHasInterest(userId);
+	}
 }

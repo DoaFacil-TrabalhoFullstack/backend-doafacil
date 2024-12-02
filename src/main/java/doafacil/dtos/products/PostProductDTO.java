@@ -4,12 +4,10 @@ public class PostProductDTO {
 	
     private String name;
     private String description;
-   	private Long owner;
-   	
-	public PostProductDTO(String name, String description, Long owner) {
+
+	public PostProductDTO(String name, String description) {
 		this.name = name;
 		this.description = description;
-		this.owner = owner;
 	}
 
     public String getName() {
@@ -26,13 +24,5 @@ public class PostProductDTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Long getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Long owner) {
-        this.owner = owner;
     }
 }

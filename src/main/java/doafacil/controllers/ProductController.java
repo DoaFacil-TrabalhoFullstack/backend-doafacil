@@ -3,6 +3,7 @@ package doafacil.controllers;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,15 +39,17 @@ public class ProductController {
 
 	@PostMapping("/create")
 	public ResponseEntity<GetProductDTO> createProduct(@RequestBody PostProductDTO postProductDTO) {
-		User userOwner = userService.getUserById(postProductDTO.getOwner());
+		User userOwner = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User managedOwner = userService.getUserById(userOwner.getId());
 		
-		Product product = productService.createProduct(ProductMapper.fromDTO(postProductDTO, userOwner));
+		Product product = productService.createProduct(ProductMapper.fromDTO(postProductDTO, managedOwner));
 		return ResponseEntity.ok(ProductMapper.fromEntity(product));
 	}
 	
 	@PostMapping("/interested")
 	public ResponseEntity<GetInterestedOnProductDTO> createInterestedOnProduct(@RequestBody PostInterestedOnProductDTO postInterestedOnProductDTO) {
-		User user = userService.getUserById(postInterestedOnProductDTO.getUserId());
+		User userOwner = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserById(userOwner.getId());
 		Product product = productService.getProductById(postInterestedOnProductDTO.getProductId());
 		
 		InterestedOnProduct interestedOnProduct = productService.createInterestedOnProduct(InterestedOnProductMapper.fromDTO(user, product)); 
@@ -55,10 +58,10 @@ public class ProductController {
 	}
 	
 	@GetMapping("/list/ownerId")
-	public ResponseEntity<List<GetProductDTO>> getProductByOwner(@RequestParam Long ownerId) {
-		User userOwner = userService.getUserById(ownerId);
+	public ResponseEntity<List<GetProductDTO>> getProductByOwner() {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		List<Product> products = productService.getProductByOwner(userOwner);
+		List<Product> products = productService.getProductByOwner(user);
 		List<GetProductDTO> productDTOs = products.stream()
 				  								  .map(ProductMapper::fromEntity)
 				  								  .toList();
@@ -86,6 +89,18 @@ public class ProductController {
 		List<GetProductDTO> productDTOs = products.stream()
 	            								  .map(ProductMapper::fromEntity)
 	            								  .toList();
+		return ResponseEntity.ok(productDTOs);
+	}
+
+	@GetMapping("/list/user-interest")
+	public ResponseEntity<List<GetProductDTO>> getUserInterests() {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<Product> products = productService.getAllProductsUserHasInterest(user.getId());
+
+		List<GetProductDTO> productDTOs = products.stream()
+				.map(ProductMapper::fromEntity)
+				.toList();
+
 		return ResponseEntity.ok(productDTOs);
 	}
 }
